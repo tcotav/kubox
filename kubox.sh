@@ -13,11 +13,21 @@ if [ ! -z "$1" ]
   NS=--namespace=${1}
 fi
 
-# swiped from
-# https://gist.github.com/earthgecko/3089509
-UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1|tr '[:upper:]' '[:lower:]')
-POD=kubox-${UUID} 
+NUM_CHARS_GEN=6
 
+# swiped char string gen from
+# https://gist.github.com/earthgecko/3089509
+OS=`uname -a | cut -d " " -f 1`
+if [ "$OS" == "Darwin" ];then
+  UUID=$(cat /dev/urandom | env LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w ${NUM_CHARS_GEN} | head -n 1|tr '[:upper:]' '[:lower:]')
+else 
+  # default to linux
+  UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w ${NUM_CHARS_GEN} | head -n 1|tr '[:upper:]' '[:lower:]')
+fi
+# mac
+
+POD=kubox-${UUID} 
+echo "Creating pod: ${POD}..."
 kubectl run -i --tty ${POD} --image=${IMAGE} --generator="run-pod/v1" ${NS}
 
 echo "remove pod with: "
