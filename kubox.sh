@@ -3,7 +3,7 @@
 #
 # container repo image
 #
-IMAGE=tcotav/kubox
+IMAGE=tcotav/kubox:1.01
 
 #
 # get what namespace we will be working in.  
