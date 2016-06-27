@@ -1,4 +1,9 @@
 #!/bin/bash
 
-sudo docker build -t tcotav/kubox .
+VERSION=1.02
+BASE=tcotav/kubox
+
+sudo docker build -t $BASE:$VERSION .
+echo $BASE:$VERSION
+sudo docker push $BASE:$VERSION 
 
