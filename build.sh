@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=1.02
+VERSION=1.03
 BASE=tcotav/kubox
 
 sudo docker build -t $BASE:$VERSION .
